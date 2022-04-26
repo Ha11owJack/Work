@@ -1,0 +1,10 @@
+---
+- name: Playbook to copy files
+  hosts: name1
+  tasks:
+  - name: Copy file with owner and permissions
+    synchronize:
+      src: /home/nikita/Python/TAB.txt
+      dest: /home/nikita/TAB.txt
+      mode: pull
+    delegate_to: name2
