@@ -9,6 +9,6 @@
 
   - name: Deligate to L3
     copy:
-      src: /home/littleone/work/server.Tablet1
-      dest: /home/server.Tablet1
+      src: /home/littleone/work/Hello_work.py
+      dest: /home/Hello_work.py
     deligate_to: L3
