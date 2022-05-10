@@ -1,0 +1,14 @@
+---
+- name: Playbook to copy files
+  hosts: all
+  tasks:
+  - name: Copy file with owner and permissions
+    copy:
+      src: /home/littleone/work/Hello_work.py
+      dest: /home/Hello_work.py
+
+  - name: Deligate to L3
+    copy:
+      src: /home/littleone/work/server.Tablet1
+      dest: /home/server.Tablet1
+    deligate_to: L3
