@@ -1,29 +1,44 @@
-import argparse #Парсер
+import argparse
 import sqlite3
 import random 
 import os
-par = argparse.ArgumentParser() # Создание парсера
-subparser = par.add_subparsers(dest = "command") # Объявление субпарсера 
-Sub1 = subparser.add_parser('show', help = 'Table') # Создание субпарсера показать список таблиц
-Sub2 = subparser.add_parser('create', help = 'Create Table')# Создание субпарсера создание таблиц
-Sub2.add_argument("a",type = int, help = "Num str") # Аргумент субпарсера 2 (число)
-Sub2.add_argument("k",type = str, help = "Name table")# Аргмент субпарсера 2 (строка)
-x = par.parse_args() # Присвоение всеё информации парсера
-if x.command == "create": # проверка на слово
-    K = x.k # присвоение переменной
-    Z = x.a 
-    Table1 = sqlite3.connect('server.Tablet1') 
+par = argparse.ArgumentParser() 
+subparser = par.add_subparsers(dest = "command")  
+Create_Y_T= subparser.add_parser('create', help = 'Create Table')
+Cr_m_t = subparser.add_parser('multi', help = 'Create Table')
+Create_Y_T.add_argument("Name_2",type = str, help = "Name of db that you need to connect")
+Create_Y_T.add_argument("Tab",type = str, help = "Name of Table")
+Create_Y_T.add_argument("num",type = int, help = "Number of Tables you need to create")
+Cr_m_t.add_argument("Name_3",type = str, help = "Name of db that you need to connect")
+Cr_m_t.add_argument("Tab_num",type = int, help = "Number of Tables you need to create")
+TABLE = par.parse_args() 
+
+if TABLE.command == "create": 
+    NameTab = TABLE.Tab
+    Table1 = sqlite3.connect('%s.db' %TABLE.Name_2) 
     sql = Table1.cursor()
-    sql.execute("CREATE TABLE IF NOT EXISTS %s (id INT,N INT)" %K) # Создание произвольной таблицы
+    sql.execute("CREATE TABLE IF NOT EXISTS %s (id INT,N INT)" %NameTab)                    # Создает бд , с таблицей произвольного имени и длины
     Table1.commit()
-    for i in range(Z): #Создание таблицы размером Z
-        U = random.randint(1,100)# рандомное число
-        sql.execute("INSERT INTO %s VALUES(?,?)" %K, (i+1,U))# Вставка в произвольную таблицу
-    sql.execute("SELECT * FROM %s" %K)# Выбрать всё из таблицы
-    print(sql.fetchall())# Вывод таблицы
-elif x.command == "show":# проверка на слово
-    user = os.getlogin()# имя юзера(для папки)
-    Table1 = sqlite3.connect('/home/%s/Work/server.Tablet1' %user, uri = True)# поиск таблицы в папке
+    Table_Lench = int(input("Введите кол-строк в таблице: "))
+    for i in range(Table_Lench): 
+        Random_number = random.randint(1,100)
+        sql.execute("INSERT INTO %s VALUES(?,?)" %NameTab, (i+1,Random_number))
+    sql.execute("SELECT * FROM %s" %NameTab) 
+    print('\n'+NameTab) 
+    print(sql.fetchall()) 
+
+elif TABLE.command == "multi": 
+    Table1 = sqlite3.connect('%s.db' %TABLE.Name_3) 
     sql = Table1.cursor()
-    sql.execute("SELECT name FROM sqlite_master WHERE type = 'table';") # выполнение команды поиска таблиц
-    print(sql.fetchall())#вывод таблиц
+    Table_Lench = int(input("Введите кол-строк в таблице: "))
+    for i in range (TABLE.Tab_num):
+        Name_Tab_s = 'Table' + str(i+1)
+        sql.execute("CREATE TABLE IF NOT EXISTS %s (id INT,N INT)" %Name_Tab_s)                 #  Создает бд с произвольным кол-вом таблиц и проищовльной длиной таблиц
+        Table1.commit()
+        for i in range(Table_Lench):
+            Random_number = random.randint(1,100)
+            sql.execute("INSERT INTO %s VALUES(?,?)" %Name_Tab_s, (i+1,Random_number))# 
+        sql.execute("SELECT * FROM %s" %Name_Tab_s)
+        print('\n'+Name_Tab_s) 
+        print(sql.fetchall())  
+        print('\n\n\n') 
