@@ -4,7 +4,8 @@
   - name: Create file
     copy:
       src: /home/littleone/work/Hello_work.py
-      dest: /home/littleone
+      dest: /home/jack
+    delegate_to: 192.168.1.3
   - name: File
     copy:
       src: /home/littleone/work/Hello_work.py
