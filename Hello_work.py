@@ -18,7 +18,7 @@ if TABLE.command == "create":
     sql = Table1.cursor()
     sql.execute("CREATE TABLE IF NOT EXISTS %s (id INT,N INT)" %NameTab)                    # Создает бд , с таблицей произвольного имени и длины
     Table1.commit()
-    Table_Length = int(input("Введите кол-строк в таблице: "))
+    Table_Length = 20
     for i in range(Table_Length): 
         Random_number = random.randint(1,100)
         sql.execute("INSERT INTO %s VALUES(?,?)" %NameTab, (i+1,Random_number))
@@ -29,7 +29,7 @@ if TABLE.command == "create":
 elif TABLE.command == "multi": 
     Table1 = sqlite3.connect('%s.db' %TABLE.Name_multi) 
     sql = Table1.cursor()
-    Table_Length = int(input("Введите кол-строк в таблице: "))
+    Table_Length = 20
     for i in range (TABLE.Tab_num):
         Name_Tab_s = 'Table' + str(i+1)
         sql.execute("CREATE TABLE IF NOT EXISTS %s (id INT,N INT)" %Name_Tab_s)                 #  Создает бд с произвольным кол-вом таблиц и произвольной длиной таблиц

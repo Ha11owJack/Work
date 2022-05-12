@@ -1,13 +1,15 @@
 ---
-- hosts: Group_B
+- hosts: Hosts
   tasks:
   - name: Create file
     copy:
       src: /home/littleone/work/Hello_work.py
-      dest: /home/jack
-    delegate_to: 192.168.1.3
-  - name: File
-    copy:
-      src: /home/littleone/work/Hello_work.py
-      dest: /home/jacktime
-    delegate_to: 192.168.1.2
+      dest: /home/{{ansible_user}}
+  - name: Do hast   
+    script: Hello_work.py multi tG 2
+    register: command_output
+    args:
+      executable: python3
+  - name: command output
+    ansible.builtin.debug:
+      var: command_output.stdout_lines
