@@ -1,14 +1,12 @@
 ---
-- name: Playbook to copy files
-  hosts: all
+- hosts: Group_B
   tasks:
-  - name: Copy file with owner and permissions
+  - name: Create file
     copy:
       src: /home/littleone/work/Hello_work.py
-      dest: /home/Hello_work.py
-
-  - name: Deligate to L3
+      dest: /home/littleone
+  - name: File
     copy:
       src: /home/littleone/work/Hello_work.py
-      dest: /home/Hello_work.py
-    deligate_to: L3
+      dest: /home/jacktime
+    delegate_to: 192.168.1.2
