@@ -9,7 +9,7 @@ def multi():
     sql = Table.cursor()
     Table_Length = 20
     for i in range(Table_work.num):
-        Name_Tabs = Table_work.name + str(Table_Length)
+        Name_Tabs = Table_work.name + ".db " + str(Table_Length) + "(" + str(i+1) + ")"
         sql.execute("CREATE TABLE IF NOT EXISTS %s (id INT,N INT)" 
                     %Name_Tabs)                                                                    #  Создает бд с произвольным кол-вом таблиц и произвольной длиной таблиц
         Table.commit()
@@ -22,6 +22,7 @@ def multi():
         print('\n'+Name_Tabs) 
         print(sql.fetchall())  
         print('\n\n\n') 
+    print("Replace id")
 
 
 def create():
@@ -65,3 +66,4 @@ Create_multi.set_defaults(func=multi)
 Create_one.set_defaults(func=create)
 Table_work = par.parse_args() 
 Table_work.func()
+print("Replace call subparser to function")
