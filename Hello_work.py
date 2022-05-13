@@ -42,6 +42,7 @@ def create():
     print('\n'+Table_work.TAB) 
     print(sql.fetchall())  
     print('\n\n\n') 
+    print("Replace id")
 
 
 par = argparse.ArgumentParser()
