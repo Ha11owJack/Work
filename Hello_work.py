@@ -1,49 +1,44 @@
 import argparse
 import sqlite3
 import random 
-
-
 def multi():
-    Table = sqlite3.connect('%s.db' 
-                            %Table_work.name) 
-    sql = Table.cursor()
+    Table1 = sqlite3.connect('%s.db' 
+                            %TABLE.name) 
+    sql = Table1.cursor()
     Table_Length = 20
-    for i in range(Table_work.num):
-        Name_Tabs = Table_work.name + ".db " + str(Table_Length) + "(" + str(i+1) + ")"
+    for i in range(TABLE.num):
+        Name_Tab_s = TABLE.name + str(Table_Length)
         sql.execute("CREATE TABLE IF NOT EXISTS %s (id INT,N INT)" 
-                    %Name_Tabs)                                                                    #  Создает бд с произвольным кол-вом таблиц и произвольной длиной таблиц
-        Table.commit()
+                    %Name_Tab_s)                                                                    #  Создает бд с произвольным кол-вом таблиц и произвольной длиной таблиц
+        Table1.commit()
         for i in range(Table_Length):
             Random_number = random.randint(1,100)
             sql.execute("INSERT INTO %s VALUES(?,?)" 
-                        %Name_Tabs, (i+1,Random_number))
+                        %Name_Tab_s, (i+1,Random_number))
         sql.execute("SELECT * FROM %s" 
-                    %Name_Tabs)
-        print('\n'+Name_Tabs) 
+                    %Name_Tab_s)
+        print('\n'+Name_Tab_s) 
         print(sql.fetchall())  
-        print('\n\n\n') 
-    print("Replace id")
-
-
+        print('\n\n') 
+    print("Replace id\n")
 def create():
-    Table = sqlite3.connect('%s.db' 
-                            %Table_work.name) 
-    sql = Table.cursor()
+    Table1 = sqlite3.connect('%s.db' 
+                            %TABLE.name) 
+    sql = Table1.cursor()
     Table_Length = 20
     sql.execute("CREATE TABLE IF NOT EXISTS %s (id INT,N INT)" 
-                %Table_work.TAB)                                                                     #  Создает бд c таблицей произвольного имени
+                %TABLE.TAB)                                                                     #  Создает бд c таблицей произвольного имени
     for i in range(Table_Length):
         Random_number = random.randint(1, 100)
         sql.execute("INSERT INTO %s VALUES(?,?)" 
-                    %Table_work.TAB, 
+                    %TABLE.TAB, 
                     (i+1,Random_number))
     sql.execute("SELECT * FROM %s" 
-                %Table_work.TAB)
-    print('\n'+Table_work.TAB) 
+                %TABLE.TAB)
+    print('\n'+TABLE.TAB) 
     print(sql.fetchall())  
-    print('\n\n\n') 
-    print("Replace id")
-
+    print('\n\n') 
+    print("Replace id\n")
 
 par = argparse.ArgumentParser()
 subparser = par.add_subparsers()  
@@ -65,6 +60,6 @@ Create_multi.add_argument("-num", "--num",
                             help = "Number of Tables you need to create")
 Create_multi.set_defaults(func=multi)
 Create_one.set_defaults(func=create)
-Table_work = par.parse_args() 
-Table_work.func()
+TABLE = par.parse_args() 
 print("Replace call subparser to function")
+TABLE.func()
