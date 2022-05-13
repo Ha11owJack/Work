@@ -1,15 +1,15 @@
 ---
-- hosts: Hosts
+- hosts: all
   tasks:
   - name: Create file
     copy:
       src: /home/littleone/work/Hello_work.py
       dest: /home/{{ansible_user}}
-  - name: Do hast   
-    script: Hello_work.py multi {{name}} {{num}}
+  - name: Starting to work with the program  
+    script: Hello_work.py multi -n {{name}} -num {{num}}
     register: command_output
     args:
       executable: python3
-  - name: command output
+  - name: Command output exit with...
     ansible.builtin.debug:
       var: command_output.stdout_lines
