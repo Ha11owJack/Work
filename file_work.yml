@@ -6,7 +6,7 @@
       src: /home/littleone/work/Hello_work.py
       dest: /home/{{ansible_user}}
   - name: Do hast   
-    script: Hello_work.py multi -name -num
+    script: Hello_work.py multi {{name}} {{num}}
     register: command_output
     args:
       executable: python3
