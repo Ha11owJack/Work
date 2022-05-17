@@ -3,10 +3,10 @@
   tasks:
   - name: Create file
     copy:
-      src: /home/littleone/work/Hello_work.py
+      src: /home/littleone/work/Prot.py
       dest: /home/{{ansible_user}}
   - name: Starting to work with the program  
-    script: Hello_work.py -n {{name}} -l {{str}} {{command}} {{num}}
+    script: Prot.py -n {{name}} -l {{str}} {{command}} {{num}}
     register: command_output
     args:
       executable: python3
