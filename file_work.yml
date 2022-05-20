@@ -6,7 +6,7 @@
       src: /home/littleone/work/Prot.py
       dest: /home/{{ansible_user}}
   - name: Starting to work with the program  
-    script: Prot.py -n {{name}} {{command}} -l {{str}} {{table}} {{num}}
+    script: Prot.py -n {{name}} multi -l {{str}} -t {{table}} -i {{num}}
     register: command_output
     args:
       executable: python3
