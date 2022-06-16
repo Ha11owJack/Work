@@ -65,3 +65,4 @@ https://www.motadata.com/ru/network-management-system
 сетевой трафик
 События с рисками
 планирование мощностей
+http://math.gsu.by/wp-content/uploads/courses/networks/r7.3.html
