@@ -1,15 +1,30 @@
 ---
-- hosts: all
+- hosts: Host
   tasks:
-  - name: Create file
-    copy:
-      src: /home/littleone/work/Prot.py
-      dest: /home/{{ansible_user}}
-  - name: Starting to work with the program  
-    script: Prot.py -n {{name}} multi -l {{str}} -t {{table}} -i {{num}}
-    register: command_output
-    args:
-      executable: python3
-  - name: Command output exit with...
-    ansible.builtin.debug:
-      var: command_output.stdout_lines
+  - apt_repository:
+      repo: "{{ item }}"
+    with_items:
+      - "deb http://10.20.13.120/repo/smolensk/repository-update-9 smolensk contrib main non-free"
+      - "deb http://10.20.13.120/repo/smolensk/repository-update-xrdp smolensk contrib main non-free"
+      - "deb http://10.20.13.120/repo/smolensk/mounted-iso-main smolensk contrib main non-free"
+      - "deb http://10.20.13.120/repo/smolensk/smolensk_iso smolensk main non-free contrib"
+      - "deb http://10.20.13.120/repo/smolensk/repository-update-9-dev smolensk contrib main non-free"
+  - apt:
+      name: apache2
+      state: present
+  - name: Смена AstraMode
+    lineinfile: 
+      path: /etc/apache2/apache2.conf
+      search_string: "# AstraMode on"
+      line: "AstraMode off"
+  - name: Скорее всего надо будет функцию копирования выставить (Пока не проверю не пойму)
+    template: 
+      src: /etc/apache2/sites-enabled/Reposit.conf
+      dest: /etc/apache2/sites-enabled
+      owner: Hel2lowJack
+      group: Host
+      mode: '0644'
+  - shell: sudo a2ensite Reposit.conf
+  - shell: sudo a2dissite 000-default.conf
+  - name: Перезагрузка сервера
+    shell: sudo systemctl restart apache2
